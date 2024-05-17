@@ -10,7 +10,7 @@ import { Spin } from 'antd';
 const ContactInfoDisplay = () => {
     return (
         <div className="lg:flex-row lg:p-20 lg:px-[300px] p-10">
-        <h1 className="text-[40px] font-semibold font-[ubuntu] mb-8 lg:mb-0">We're always available</h1>
+        <h1 className="text-[40px] font-semibold font-[ubuntu] mb-8 lg:mb-0">We are always available</h1>
         <div className="mt-10 flex justify-around lg:flex-row flex-col">
           <div className="flex flex-col lg:flex-row lg:mr-8">
             <span role="img" aria-label="mobile" className="anticon anticon-mobile text-[88px] text-[#BBBBBB] lg:mr-4 lg:mb-0 mb-4">

@@ -15,7 +15,7 @@ interface FormValues {
 const FormUI: React.FC = () => {
   return (
     <div className="flex flex-col lg:p-20 p-10 xs:pt-0 sm:pt-0 lg:px-[300px]">
-      <h1 className="text-[32px] font-semibold font-[ubuntu]">Or fill out this form, we'll<br /> quickly get back to you</h1>
+      <h1 className="text-[32px] font-semibold font-[ubuntu]">Or fill out this form, we will<br /> quickly get back to you</h1>
       <Formik
         initialValues={{ name: '', email: '', subject: '', message: '' }}
         validate={(values: FormValues) => {
