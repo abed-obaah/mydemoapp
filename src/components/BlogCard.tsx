@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import moment from 'moment';
 import Link from 'next/link';
 import { Spin } from 'antd';
@@ -10,22 +10,22 @@ const BlogCard = () => {
     const [page, setPage] = useState(1);
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        fetchData();
-    }, [page]);
-
-    const fetchData = async () => {
+    
+    const fetchData = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`https://loantest-api.rivbnk.tradeofficeapps.com/blog?page=${page}`);
-            setBlogs(response.data.results);
+          const response = await axios.get(`https://loantest-api.rivbnk.tradeofficeapps.com/blog?page=${page}`);
+          setBlogs(response.data.results);
         } catch (error) {
-            console.error('Error fetching blogs:', error);
+          console.error('Error fetching blogs:', error);
         }
         setLoading(false);
-    };
-
+      }, [page]); // Add 'page' as a dependency
+    
+      useEffect(() => {
+        fetchData();
+      }, [fetchData]); // Include fetchData in the dependency array
+    
     return (
         <>
             <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-8 px-[68px] pt-10">

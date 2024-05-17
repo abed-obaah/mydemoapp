@@ -20,7 +20,7 @@ const ContactInfoDisplay = () => {
             </span>
             <div className="flex flex-col">
               <h4 className="text-[20px] font-semibold mb-2">+234 (0) 702 500 7881</h4>
-              <span className="text-[18px] mb-5">Mon - Fri 9am - 6pm <br /> Sat `&amp;` Sun  11am - 2pm</span>
+              <span className="text-[18px] mb-5">Mon - Fri 9am - 6pm <br /> Sat && Sun  11am - 2pm</span>
 
               <a href="tel:+2347025007881" className="mb-4 py-4 px-10 bg-[#4A9A71] hover:text-white text-[16px] text-white font-semibold text-center block rounded-[10px]">Call Now</a>
             </div>
