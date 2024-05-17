@@ -28,12 +28,14 @@ const BlogCard: React.FC = () => {
   const [page, setPage] = useState(1);
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(false);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get <BlogResponse>(`https://loantest-api.rivbnk.tradeofficeapps.com/blog?page=${page}`);
+      const response = await axios.get<BlogResponse>(`https://loantest-api.rivbnk.tradeofficeapps.com/blog?page=${page}`);
       setBlogs(response.data.results);
+      setHasNextPage(!!response.data.next);
     } catch (error) {
       console.error('Error fetching blogs:', error);
     }
@@ -53,8 +55,7 @@ const BlogCard: React.FC = () => {
               <Image src={blog.cover_image} alt={blog.title} className="shadow-lg rounded max-w-full h-[300px] align-middle border-none" />
             </div>
             <div className="py-5">
-            <span className="text-[#4A9A71]">Published <span>{moment(blog.date_created).fromNow()}</span></span>
-
+              <span className="text-[#4A9A71]">Published <span>{moment(blog.date_created).fromNow()}</span></span>
               <h3 className="font-[ubuntu] text-[#292929] text-[20px] font-bold">
                 <Link href={`/blog/${blog.id}`}>
                   <a>{blog.title}</a>
@@ -79,24 +80,25 @@ const BlogCard: React.FC = () => {
         )}
       </div>
       <div className="flex justify-center my-10">
-        {blogs.length > 0 && blogs.next && (
-          <button
-            className="rounded-full bg-[#4A9A71] px-10 py-3 font-semibold text-[20px] text-white"
-            type="button"
-            onClick={() => setPage(prevstate => prevstate + 1)}
-          >
-            Next
-          </button>
-        )}
-        {blogs.length > 0 && blogs.previous && (
-          <button
-            className="rounded-full bg-[#4A9A71] px-10 py-3 font-semibold text-[20px] text-white"
-            type="button"
-            onClick={() => setPage(prevstate => prevstate - 1)}
-          >
-            Previous
-          </button>
-        )}
+      {hasNextPage && (
+  <button
+    className="rounded-full bg-[#4A9A71] px-10 py-3 font-semibold text-[20px] text-white"
+    type="button"
+    onClick={() => setPage(prevstate => prevstate + 1)}
+  >
+    Next
+  </button>
+)}
+{page > 1 && (
+  <button
+    className="rounded-full bg-[#4A9A71] px-10 py-3 font-semibold text-[20px] text-white"
+    type="button"
+    onClick={() => setPage(prevstate => prevstate - 1)}
+  >
+    Previous
+  </button>
+)}
+
       </div>
     </>
   );
