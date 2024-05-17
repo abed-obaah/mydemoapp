@@ -1,24 +1,14 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import Link from 'next/link';
 import { Spin } from 'antd';
 import { CommentOutlined, EyeOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import Image from 'next/image';
-
-// Define the interface for a blog object
-interface Blog {
-  id: string;
-  title: string;
-  cover_image: string;
-  date_created: string;
-  total_comments: number;
-  total_views: number;
-}
 
 const BlogCard = () => {
     const [page, setPage] = useState(1);
-    const [blogs, setBlogs] = useState<Blog[]>([]);
+    const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -32,18 +22,17 @@ const BlogCard = () => {
             setBlogs(response.data.results);
         } catch (error) {
             console.error('Error fetching blogs:', error);
-        } finally {
-            setLoading(false);
         }
+        setLoading(false);
     };
 
     return (
         <>
             <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-8 px-[68px] pt-10">
-                {blogs.map(blog => (
-                    <div className="col-span-1" key={blog.id}>
+                {blogs.map((blog) => (
+                    <div className="col-span-1" key={blog.title}>
                         <div className="w-full h-[300px] rounded-[10px]">
-                            <Image src={blog.cover_image} alt={blog.title} className="shadow-lg rounded max-w-full h-[300px] align-middle border-none" />
+                            <img src={blog.cover_image} alt={blog.title} className="shadow-lg rounded max-w-full h-[300px] align-middle border-none" />
                         </div>
                         <div className="py-5">
                             <span className="text-[#4A9A71]">Published <span>{moment(blog.date_created).startOf('ss').fromNow()}</span></span>
@@ -63,9 +52,7 @@ const BlogCard = () => {
                         </div>
                     </div>
                 ))}
-                {loading && (
-                    <Spin spinning={true} className="lg:col-span-4 md:col-span-2 col-span-1 text-center"></Spin>
-                )}
+                {loading && <Spin spinning={true} className="lg:col-span-4 md:col-span-2 col-span-1 text-center"></Spin>}
                 {!loading && blogs.length === 0 && (
                     <div className="lg:col-span-4 md:col-span-2 col-span-1 p-10 h-[400px] text-[32px] flex place-items-center justify-center">
                         <span>No blogs found.</span>
@@ -73,27 +60,23 @@ const BlogCard = () => {
                 )}
             </div>
             <div className="flex justify-center my-10">
-                {blogs.length > 0 && (
-                    <>
-                        {blogs.previous && (
-                            <button
-                                className="rounded-full bg-[#4A9A71] px-10 py-3 font-semibold text-[20px] text-white mr-3"
-                                type="button"
-                                onClick={() => setPage(prevState => prevState - 1)}
-                            >
-                                Previous
-                            </button>
-                        )}
-                        {blogs.next && (
-                            <button
-                                className="rounded-full bg-[#4A9A71] px-10 py-3 font-semibold text-[20px] text-white"
-                                type="button"
-                                onClick={() => setPage(prevState => prevState + 1)}
-                            >
-                                Next
-                            </button>
-                        )}
-                    </>
+                {blogs.next && (
+                    <button
+                        className="rounded-full bg-[#4A9A71] px-10 py-3 font-semibold text-[20px] text-white"
+                        type="button"
+                        onClick={() => setPage(prevstate => prevstate + 1)}
+                    >
+                        Next
+                    </button>
+                )}
+                {blogs.previous && (
+                    <button
+                        className="rounded-full bg-[#4A9A71] px-10 py-3 font-semibold text-[20px] text-white"
+                        type="button"
+                        onClick={() => setPage(prevstate => prevstate - 1)}
+                    >
+                        Previous
+                    </button>
                 )}
             </div>
         </>
