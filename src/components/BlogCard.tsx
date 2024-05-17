@@ -53,7 +53,8 @@ const BlogCard: React.FC = () => {
               <Image src={blog.cover_image} alt={blog.title} className="shadow-lg rounded max-w-full h-[300px] align-middle border-none" />
             </div>
             <div className="py-5">
-              <span className="text-[#4A9A71]">Published <span>{moment(blog.date_created).startOf('ss').fromNow()}</span></span>
+            <span className="text-[#4A9A71]">Published <span>{moment(blog.date_created).fromNow()}</span></span>
+
               <h3 className="font-[ubuntu] text-[#292929] text-[20px] font-bold">
                 <Link href={`/blog/${blog.id}`}>
                   <a>{blog.title}</a>
