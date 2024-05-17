@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Spin } from 'antd';
 import { CommentOutlined, EyeOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import Image from 'next/image';
 
 // Define the interface for the blog data
 interface Blog {
@@ -31,7 +32,7 @@ const BlogCard: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get<BlogResponse>(`https://loantest-api.rivbnk.tradeofficeapps.com/blog?page=${page}`);
+      const response = await axios.get <BlogResponse>(`https://loantest-api.rivbnk.tradeofficeapps.com/blog?page=${page}`);
       setBlogs(response.data.results);
     } catch (error) {
       console.error('Error fetching blogs:', error);
@@ -49,7 +50,7 @@ const BlogCard: React.FC = () => {
         {blogs.map((blog) => (
           <div className="col-span-1" key={blog.id}>
             <div className="w-full h-[300px] rounded-[10px]">
-              <img src={blog.cover_image} alt={blog.title} className="shadow-lg rounded max-w-full h-[300px] align-middle border-none" />
+              <Image src={blog.cover_image} alt={blog.title} className="shadow-lg rounded max-w-full h-[300px] align-middle border-none" />
             </div>
             <div className="py-5">
               <span className="text-[#4A9A71]">Published <span>{moment(blog.date_created).startOf('ss').fromNow()}</span></span>
